@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Justin Bieber — Fan Page</title>
+    <meta name="description"
+        content="A fan-made, interactive Justin Bieber page built with vanilla HTML, CSS, and JS." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0b11;
+            --elev: #141421;
+            --text: #f4f5f7;
+            --muted: #b7b9c6;
+            --brand: #8a7bff;
+            --accent: #ff72b6;
+            --success: #3dd9a3;
+            --warning: #ffd166;
+            --danger: #ff6b6b;
+            --ring: rgba(138, 123, 255, .45);
+            --primary: #ff006e;
+            /* Hot pink */
+            --secondary: #8338ec;
+            /* Purple */
+            --accent: #ffbe0b;
+            /* Yellow */
+
+        }
+
+        [data-theme="light"] {
+            --bg: #ffffff;
+            --elev: #f4f4f8;
+            --text: #111217;
+            --muted: #4a4d57;
+            --brand: #5b45ff;
+            --accent: #ff4fa3;
+            --ring: rgba(91, 69, 255, .35);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: radial-gradient(1200px 700px at 80% -10%, rgba(255, 114, 182, .25), transparent 60%),
+                radial-gradient(900px 600px at 20% -10%, rgba(138, 123, 255, .25), transparent 60%),
+                var(--bg);
+            color: var(--text);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            z-index: 50;
+            width: 100%;
+            backdrop-filter: blur(8px);
+            background: linear-gradient(180deg, rgba(11, 11, 17, .9), rgba(11, 11, 17, .6));
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 10 16px
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0
+        }
+
+        .nav .left {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--brand), var(--accent));
+            font-weight: 800;
+            letter-spacing: .5px
+        }
+
+        .brand {
+            font-weight: 800;
+            letter-spacing: .5px
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 14px;
+            padding: 0;
+            margin: 0;
+            flex-wrap: wrap
+        }
+
+        nav a {
+            padding: 8px 10px;
+            border-radius: 10px
+        }
+
+        nav a.active,
+        nav a:hover {
+            background: rgba(255, 255, 255, .08)
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center
+        }
+
+        .btn {
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: var(--elev);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: .2s;
+            font-weight: 600
+        }
+
+        .btn:hover {
+            transform: translateY(-1px)
+        }
+
+        .btn.brand {
+            background: linear-gradient(135deg, var(--brand), var(--accent));
+            border: none
+        }
+
+        /* Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 24px;
+            align-items: center;
+            padding: 32px 0 18px;
+            margin: 32px 0 0;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            line-height: 1.05;
+            margin: 0 0 8px
+        }
+
+        .kicker {
+            color: var(--muted);
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-size: 12px
+        }
+
+        .hero p {
+            color: var(--muted)
+        }
+
+        .statbar {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 8px
+        }
+
+        .pill {
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .08);
+            font-size: 13px
+        }
+
+        .hero-card {
+            aspect-ratio: 4/3;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, .08);
+            background: url('./justin/justin7.jpg') center/cover no-repeat;
+        }
+
+        .hero-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .55))
+        }
+
+        .hero-card .caption {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            right: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: end
+        }
+
+        /* Sections */
+        section {
+            scroll-margin-top: 84px;
+            padding: 26px 0
+        }
+
+        h2 {
+            font-size: 26px;
+            margin: 0 0 14px
+        }
+
+        .grid {
+            display: grid;
+            gap: 14px
+        }
+
+        .grid.cols-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr))
+        }
+
+        .grid.cols-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr))
+        }
+
+        .card {
+            background: var(--elev);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 16px;
+            padding: 14px
+        }
+
+        .card h3 {
+            margin: 0 0 6px
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 8px;
+            border-radius: 999px;
+            font-size: 12px;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        .media {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0
+        }
+
+        /* Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100
+        }
+
+        .modal.open {
+            display: flex
+        }
+
+        .modal img {
+            max-width: 92vw;
+            max-height: 86vh;
+            border-radius: 12px;
+        }
+
+        /* Lists */
+        .list {
+            display: grid;
+            gap: 10px
+        }
+
+        .list .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 12px;
+            background: var(--elev);
+            border: 1px solid rgba(255, 255, 255, .08)
+        }
+
+        /* Forms */
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        .field input,
+        .field textarea,
+        .field select {
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: transparent;
+            color: var(--text)
+        }
+
+        .hint {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .ring {
+            outline: 2px solid var(--ring)
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px 0;
+            color: var(--muted)
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+
+            .grid.cols-3 {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+
+            .grid.cols-4 {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+        }
+
+        @media (max-width: 560px) {
+            nav ul {
+                display: none
+            }
+
+            .gallery {
+                grid-template-columns: repeat(1, minmax(0, 1fr))
+            }
+
+            .grid.cols-3,
+            .grid.cols-4 {
+                grid-template-columns: repeat(1, minmax(0, 1fr))
+            }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: var(--elev);
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            display: none
+        }
+
+        .toast.show {
+            display: block
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+
+        #spotify {
+            margin: 2rem auto;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        #spotify h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container nav">
+            <div class="left">
+                <div class="logo" aria-hidden="true">JB</div>
+                <div class="brand">Justin Bieber </div>
+            </div>
+            <nav aria-label="Primary">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#music">Music</a></li>
+                    <li><a href="#tour">Tour</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#poll">Poll</a></li>
+                    <li><a href="#guestbook">Guestbook</a></li>
+                    <li><a href="#trivia">Trivia</a></li>
+                    <li><a href="#newsletter">Newsletter</a></li>
+                </ul>
+            </nav>
+            <div class="actions">
+                <button id="shareBtn" class="btn" title="Share this page">Share</button>
+                <button id="themeBtn" class="btn">🌙 Toggle Theme</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- HERO -->
+        <section class="hero" id="home" aria-labelledby="home-title">
+            <div>
+                <div class="kicker"></div>
+                <h1 id="home-title">Welcome to the Justin Bieber Fan Hub</h1>
+                <p>
+                    Dive into music, tour dates, photos, polls, trivia, and a fan guestbook — all in one place.
+                </p>
+                <div class="statbar">
+                    <span class="pill" id="visitorCount">👋 Visits: 0</span>
+                    <span class="pill">🎧 Now playing: <strong>Peaches</strong></span>
+                    <span class="pill">⭐ Add to Home for quick access</span>
+                </div>
+                <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap">
+                    <a class="btn brand" href="#music">Explore Music</a>
+                    <a class="btn" href="#guestbook">Sign Guestbook</a>
+                </div>
+            </div>
+            <div class="hero-card" role="img" aria-label="Concert crowd with lights">
+                <div class="caption">
+                    <span class="chip">Fan Project</span>
+                    <span class="chip">Vanilla JS</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEDIA FEATURE -->
+        <section aria-labelledby="media-title">
+            <h2 id="media-title">Featured Performance</h2>
+            <div class="media">
+                <iframe src="https://www.youtube.com/embed/tQ0yjYUFKAE" title="Justin Bieber - Peaches (Live)"></iframe>
+            </div>
+            <p class="hint">Tip: Click any navigation item to jump around. Smooth scroll is enabled.</p>
+        </section>
+
+        <!-- ABOUT -->
+        <section id="about" aria-labelledby="about-title">
+            <h2 id="about-title">About Justin</h2>
+            <div class="grid cols-3">
+                <article class="card">
+                    <h3>Quick Bio</h3>
+                    <p class="muted">Canadian singer and global pop icon known for chart-topping hits and genre-crossing
+                        collaborations.</p>
+                    <div class="list">
+                        <div class="row"><span>Debut:</span><strong>2009</strong></div>
+                        <div class="row"><span>Notable Albums:</span><strong>Purpose, Changes, Justice</strong></div>
+                        <div class="row"><span>Awards:</span><strong>Grammys, AMAs, Billboard</strong></div>
+                    </div>
+                </article>
+                <article class="card">
+                    <h3>Why This Page</h3>
+                    <p class="muted">Built to be a minimalist, interactive hub for fans — no frameworks, just native web
+                        tech.</p>
+                    <ul class="muted">
+                        <li>Accessible and responsive</li>
+                        <li>Fast to load, easy to adapt</li>
+                        <li>All features client‑side</li>
+                    </ul>
+                </article>
+                <article class="card">
+                    <h3>Site Tools</h3>
+                    <p class="muted">Use the theme toggle, share button, and back‑to‑top shortcut (<kbd>g</kbd> then
+                        <kbd>t</kbd>).
+                    </p>
+                    <div class="list">
+                        <div class="row"><span>Theme:</span><strong id="themeStatus">Dark</strong></div>
+                        <div class="row"><span>Saved Emails:</span><strong id="emailCount">0</strong></div>
+                        <div class="row"><span>Guestbook Entries:</span><strong id="entryCount">0</strong></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- MUSIC / DISCOGRAPHY -->
+        <section id="music" aria-labelledby="music-title">
+            <h2 id="music-title">Music & Discography</h2>
+            <div class="card" style="margin-bottom:12px">
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:end">
+                    <div class="field" style="flex:1 1 260px">
+                        <label for="songSearch">Search songs</label>
+                        <input id="songSearch" type="search" placeholder="Search by title…" />
+                    </div>
+                    <div class="field">
+                        <label for="sortSongs">Sort</label>
+                        <select id="sortSongs">
+                            <option value="title">Title (A–Z)</option>
+                            <option value="year">Year (new→old)</option>
+                            <option value="likes">Most liked</option>
+                        </select>
+                    </div>
+                    <button id="clearLikes" class="btn" title="Reset likes">Reset Likes</button>
+                </div>
+            </div>
+            <div class="grid cols-3" id="songsGrid" aria-live="polite"></div>
+        </section>
+
+        <!-- TOUR -->
+        <section id="tour" aria-labelledby="tour-title">
+            <h2 id="tour-title">Upcoming Tour Dates</h2>
+            <div class="list" id="tourList"></div>
+            <p class="hint">Click “Add to Calendar” to download an .ics file for the show.</p>
+        </section>
+
+        <!-- GALLERY -->
+        <section id="gallery" aria-labelledby="gallery-title">
+            <h2 id="gallery-title">Photo Gallery</h2>
+            <div class="gallery" id="galleryGrid" aria-live="polite"></div>
+            <div class="modal" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+                <img alt="Preview" />
+            </div>
+        </section>
+
+        <!-- POLL -->
+        <section id="poll" aria-labelledby="poll-title">
+            <h2 id="poll-title">Fan Poll: Favorite Era</h2>
+            <form class="card" id="pollForm">
+                <div class="list">
+                    <label class="row"><span><input type="radio" name="era" value="My World" required> My World
+                            (2009–2010)</span> <span class="badge" id="myworldPct">0%</span></label>
+                    <label class="row"><span><input type="radio" name="era" value="Purpose"> Purpose (2015–2017)</span>
+                        <span class="badge" id="purposePct">0%</span></label>
+                    <label class="row"><span><input type="radio" name="era" value="Changes"> Changes (2020)</span> <span
+                            class="badge" id="changesPct">0%</span></label>
+                    <label class="row"><span><input type="radio" name="era" value="Justice"> Justice (2021)</span> <span
+                            class="badge" id="justicePct">0%</span></label>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:12px">
+                    <button class="btn brand" type="submit">Vote</button>
+                    <button class="btn" type="button" id="resetPoll">Reset</button>
+                </div>
+                <p class="hint" id="pollThanks" hidden>Thanks for voting! Your vote is saved on this device.</p>
+            </form>
+        </section>
+
+        <!-- GUESTBOOK -->
+        <section id="guestbook" aria-labelledby="guestbook-title">
+            <h2 id="guestbook-title">Fan Guestbook</h2>
+            <form class="card" id="guestForm">
+                <div class="grid cols-3">
+                    <div class="field">
+                        <label for="guestName">Name</label>
+                        <input id="guestName" placeholder="Your name" required maxlength="40" />
+                    </div>
+                    <div class="field">
+                        <label for="guestCity">City</label>
+                        <input id="guestCity" placeholder="Where you're from" maxlength="40" />
+                    </div>
+                    <div class="field">
+                        <label for="guestMood">Mood</label>
+                        <select id="guestMood">
+                            <option>😊</option>
+                            <option>🥳</option>
+                            <option>😭</option>
+                            <option>🔥</option>
+                            <option>💖</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field" style="margin-top:10px">
+                    <label for="guestMessage">Message</label>
+                    <textarea id="guestMessage" placeholder="Leave a supportive note for JB!" required rows="3"
+                        maxlength="200"></textarea>
+                    <div class="hint"><span id="charCount">0</span>/200</div>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:10px">
+                    <button class="btn brand" type="submit">Post to Guestbook</button>
+                    <button class="btn" type="button" id="clearGuestbook">Clear All</button>
+                </div>
+            </form>
+            <div class="list" id="guestEntries" aria-live="polite"></div>
+        </section>
+
+        <!-- TRIVIA -->
+        <section id="trivia" aria-labelledby="trivia-title">
+            <h2 id="trivia-title">Trivia Quiz</h2>
+            <div class="card">
+                <p class="muted">Test your knowledge! 5 quick questions.</p>
+                <div id="quiz"></div>
+                <button id="startQuiz" class="btn brand" style="margin-top:10px">Start Quiz</button>
+                <div id="quizResult" class="hint" style="margin-top:8px"></div>
+            </div>
+        </section>
+
+        <section id="spotify">
+            <h2>🎧 Listen on Spotify</h2>
+            <div class="spotify-embed">
+                <iframe style="border-radius:12px"
+                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DXc2aPBXGmXrt"
+                    width="100%" height="380" frameborder="0"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy">
+                </iframe>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <section id="newsletter" aria-labelledby="newsletter-title">
+            <h2 id="newsletter-title">Join the Fan Mail</h2>
+            <form class="card" id="mailForm">
+                <div class="grid cols-3">
+                    <div class="field" style="grid-column: span 2">
+                        <label for="mailEmail">Email</label>
+                        <input id="mailEmail" type="email" placeholder="you@example.com" required />
+                        <p class="hint">We store this locally on your device only.</p>
+                    </div>
+                    <div class="field">
+                        <label for="mailFreq">Frequency</label>
+                        <select id="mailFreq">
+                            <option>Weekly</option>
+                            <option>Monthly</option>
+                            <option>Only big updates</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display:flex; gap:8px; margin-top:10px">
+                    <button class="btn brand" type="submit">Subscribe</button>
+                    <button class="btn" type="button" id="exportEmails">Export (.json)</button>
+                    <button class="btn" type="button" id="clearEmails">Clear</button>
+                </div>
+            </form>
+        </section>
+
+
+        <!-- FAQ -->
+        <section aria-labelledby="faq-title">
+            <h2 id="faq-title">FAQ</h2>
+            <div class="grid cols-3">
+                <details class="card">
+                    <summary><strong>Is this official?</strong></summary>
+                    <p class="muted">No. It's a fan project for learning and fun.</p>
+                </details>
+                <details class="card">
+                    <summary><strong>Can I add my own images?</strong></summary>
+                    <p class="muted">Yes. Replace the gallery URLs in the script at the end of the file.</p>
+                </details>
+                <details class="card">
+                    <summary><strong>Does it work offline?</strong></summary>
+                    <p class="muted">Most parts do, since everything is client-side.</p>
+                </details>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <footer class="container">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap">
+            <p>Made with ❤️ by fans. Not affiliated with Justin Bieber or his team.</p>
+            <button id="toTop" class="btn">↑ Back to top</button>
+        </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        // ===== Utilities =====
+        const $ = (sel, el = document) => el.querySelector(sel);
+        const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
+        const toast = (msg) => { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1800); };
+        const save = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+        const load = (k, d = null) => { try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } };
+
+        // ===== Nav active + smooth scroll =====
+        $$('nav a').forEach(a => a.addEventListener('click', e => {
+            e.preventDefault(); document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        }));
+        const onScroll = () => {
+            const y = scrollY + 90;
+            $$('main section[id]').forEach(sec => {
+                const a = document.querySelector(`nav a[href="#${sec.id}"]`);
+                if (!a) return; const top = sec.offsetTop, bottom = top + sec.offsetHeight; a.classList.toggle('active', y >= top && y < bottom);
+            });
+        };
+        document.addEventListener('scroll', onScroll, { passive: true });
+
+        // ===== Theme Toggle =====
+        const THEME_KEY = 'jb_theme';
+        const setTheme = (theme) => { document.documentElement.setAttribute('data-theme', theme); $('#themeStatus').textContent = theme === 'light' ? 'Light' : 'Dark'; save(THEME_KEY, theme); };
+        const initTheme = () => setTheme(load(THEME_KEY, 'dark'));
+        $('#themeBtn').addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
+
+        // ===== Visitor count (local device) =====
+        const VISIT_KEY = 'jb_visits';
+        const visits = (load(VISIT_KEY, 0) + 1); save(VISIT_KEY, visits); $('#visitorCount').textContent = `👋 Visits: ${visits}`;
+
+        // ===== Share button =====
+        $('#shareBtn').addEventListener('click', async () => {
+            const data = { title: 'Justin Bieber — Fan Page', text: 'Check out this fan-made, interactive JB page!', url: location.href };
+            if (navigator.share) { try { await navigator.share(data); } catch { } } else {
+                await navigator.clipboard.writeText(location.href); toast('Link copied to clipboard');
+            }
+        });
+
+        // ===== Back to top + keyboard shortcut =====
+        $('#toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        let gPressed = false; window.addEventListener('keydown', (e) => { if (e.key === 'g') { gPressed = true; setTimeout(() => gPressed = false, 700); } if (e.key === 't' && gPressed) { window.scrollTo({ top: 0, behavior: 'smooth' }); } });
+
+        // ===== Songs data =====
+        const SONG_KEY = 'jb_songLikes';
+        const songs = [
+            { title: 'Baby', year: 2010 },
+            { title: 'Sorry', year: 2015 },
+            { title: 'Love Yourself', year: 2015 },
+            { title: 'Peaches', year: 2021 },
+            { title: 'Yummy', year: 2020 },
+            { title: 'What Do You Mean?', year: 2015 },
+            { title: 'Ghost', year: 2021 },
+            { title: 'Intentions', year: 2020 },
+            { title: 'Company', year: 2016 }
+        ];
+
+        function renderSongs() {
+            const grid = $('#songsGrid'); grid.innerHTML = '';
+            const q = $('#songSearch').value.toLowerCase();
+            const likes = load(SONG_KEY, {});
+            let arr = songs.filter(s => s.title.toLowerCase().includes(q));
+            const sort = $('#sortSongs').value;
+            if (sort === 'title') arr.sort((a, b) => a.title.localeCompare(b.title));
+            if (sort === 'year') arr.sort((a, b) => b.year - a.year);
+            if (sort === 'likes') arr.sort((a, b) => (likes[b.title] || 0) - (likes[a.title] || 0));
+            arr.forEach(s => {
+                const n = likes[s.title] || 0;
+                const el = document.createElement('article'); el.className = 'card';
+                el.innerHTML = `
+          <h3>${s.title}</h3>
+          <p class="muted">Released: ${s.year}</p>
+          <div style="display:flex; gap:8px; align-items:center">
+            <button class="btn brand likeBtn">❤ Like (<span>${n}</span>)</button>
+            <a class="btn" href="https://www.youtube.com/results?search_query=${encodeURIComponent('Justin Bieber ' + s.title)}" target="_blank" rel="noopener">Watch</a>
+            <a class="btn" href="https://open.spotify.com/search/${encodeURIComponent('Justin Bieber ' + s.title)}" target="_blank" rel="noopener">Listen</a>
+          </div>`;
+                el.querySelector('.likeBtn').addEventListener('click', () => {
+                    const map = load(SONG_KEY, {}); map[s.title] = (map[s.title] || 0) + 1; save(SONG_KEY, map); el.querySelector('span').textContent = map[s.title];
+                });
+                grid.appendChild(el);
+            });
+        }
+        $('#songSearch').addEventListener('input', renderSongs);
+        $('#sortSongs').addEventListener('change', renderSongs);
+        $('#clearLikes').addEventListener('click', () => { localStorage.removeItem(SONG_KEY); renderSongs(); toast('Likes reset'); });
+
+        // ===== Tour dates (sample) + ICS download =====
+        const tourDates = [
+            { city: 'Singapore', venue: 'Singapore Indoor Stadium', date: '2025-12-05', time: '19:30' },
+            { city: 'Tokyo', venue: 'Tokyo Dome', date: '2026-01-12', time: '19:00' },
+            { city: 'Los Angeles', venue: 'Crypto.com Arena', date: '2026-02-02', time: '20:00' },
+        ];
+        function icsFor(show) {
+            const dtStart = show.date.replaceAll('-', '') + 'T' + show.time.replace(':', '') + '00';
+            const dtEnd = dtStart; // simple ics
+            const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//FanPage//JB//EN\nBEGIN:VEVENT\nUID:${crypto.randomUUID()}\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z\nDTSTART:${dtStart}\nDTEND:${dtEnd}\nSUMMARY:Justin Bieber — ${show.city}\nLOCATION:${show.venue}\nEND:VEVENT\nEND:VCALENDAR`;
+            return new Blob([ics], { type: 'text/calendar' });
+        }
+        function renderTour() {
+            const list = $('#tourList'); list.innerHTML = '';
+            tourDates.forEach(show => {
+                const el = document.createElement('div'); el.className = 'row';
+                const when = new Date(show.date + 'T' + (show.time || '19:00'));
+                const left = Math.max(0, Math.floor((+when - Date.now()) / 86400000));
+                el.innerHTML = `<div style="display:grid">
+          <strong>${show.city}</strong>
+          <span class="muted">${show.venue} • ${new Date(show.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })} • ${show.time}</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center">
+          <span class="chip">${left} days left</span>
+          <button class="btn brand">Add to Calendar</button>
+        </div>`;
+                el.querySelector('button').addEventListener('click', () => {
+                    const blob = icsFor(show); const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a'); a.href = url; a.download = `JB-${show.city}-${show.date}.ics`; a.click(); URL.revokeObjectURL(url);
+                });
+                list.appendChild(el);
+            });
+        }
+
+        // ===== Gallery (replace URLs if you want) =====
+        const gallery = [
+            './justin/justin1.jpg',
+            './justin/justin2.jpg',
+            './justin/justin3.jpg',
+            './justin/justin4.jpg',
+            './justin/justin5.jpg',
+            './justin/justin6.jpg',
+        ];
+        function renderGallery() {
+            const g = $('#galleryGrid'); g.innerHTML = '';
+            gallery.forEach(src => {
+                const img = document.createElement('img'); img.src = src; img.alt = 'Concert photo'; img.loading = 'lazy';
+                img.addEventListener('click', () => { $('#lightbox img').src = src; $('#lightbox').classList.add('open'); });
+                g.appendChild(img);
+            });
+            $('#lightbox').addEventListener('click', (e) => { if (e.target.id === 'lightbox') e.currentTarget.classList.remove('open'); });
+        }
+
+        // ===== Poll =====
+        const POLL_KEY = 'jb_poll';
+        const pollForm = $('#pollForm');
+        function updatePollUI() {
+            const votes = load(POLL_KEY, { 'My World': 0, 'Purpose': 0, 'Changes': 0, 'Justice': 0 });
+            const total = Object.values(votes).reduce((a, b) => a + b, 0) || 1;
+            $('#myworldPct').textContent = Math.round(100 * votes['My World'] / total) + '%';
+            $('#purposePct').textContent = Math.round(100 * votes['Purpose'] / total) + '%';
+            $('#changesPct').textContent = Math.round(100 * votes['Changes'] / total) + '%';
+            $('#justicePct').textContent = Math.round(100 * votes['Justice'] / total) + '%';
+        }
+        pollForm.addEventListener('submit', (e) => {
+            e.preventDefault(); const era = new FormData(pollForm).get('era');
+            const votes = load(POLL_KEY, { 'My World': 0, 'Purpose': 0, 'Changes': 0, 'Justice': 0 });
+            votes[era]++; save(POLL_KEY, votes); updatePollUI(); $('#pollThanks').hidden = false; toast('Vote recorded');
+        });
+        $('#resetPoll').addEventListener('click', () => { localStorage.removeItem(POLL_KEY); updatePollUI(); $('#pollThanks').hidden = true; });
+
+        // ===== Guestbook =====
+        const BOOK_KEY = 'jb_guestbook';
+        const guestForm = $('#guestForm');
+        const entriesEl = $('#guestEntries');
+        const maxChars = 200; const cc = $('#charCount');
+        $('#guestMessage').addEventListener('input', e => { cc.textContent = e.target.value.length; if (e.target.value.length > maxChars) { e.target.classList.add('ring'); } else { e.target.classList.remove('ring'); } });
+        function renderGuestbook() {
+            const entries = load(BOOK_KEY, []); entriesEl.innerHTML = ''; $('#entryCount').textContent = entries.length;
+            entries.forEach((it, idx) => {
+                const row = document.createElement('div'); row.className = 'row';
+                row.innerHTML = `<div style="display:grid">
+          <strong>${it.name} ${it.mood || ''}</strong>
+          <span class="muted">${it.city || 'Unknown'} • ${new Date(it.ts).toLocaleString()}</span>
+          <span>${it.msg}</span>
+        </div>
+        <div style="display:flex; gap:8px">
+          <button class="btn" data-act="copy">Copy</button>
+          <button class="btn" data-act="delete">Delete</button>
+        </div>`;
+                row.addEventListener('click', async (e) => {
+                    if (e.target.dataset.act === 'delete') {
+                        const arr = load(BOOK_KEY, []); arr.splice(idx, 1); save(BOOK_KEY, arr); renderGuestbook(); toast('Deleted');
+                    } else if (e.target.dataset.act === 'copy') {
+                        await navigator.clipboard.writeText(`${it.name} (${it.city}): ${it.msg}`); toast('Copied');
+                    }
+                });
+                entriesEl.appendChild(row);
+            });
+        }
+        guestForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = $('#guestName').value.trim(); const city = $('#guestCity').value.trim(); const msg = $('#guestMessage').value.trim(); const mood = $('#guestMood').value;
+            if (!name || !msg) return;
+            const entries = load(BOOK_KEY, []); entries.unshift({ name, city, msg, mood, ts: Date.now() }); save(BOOK_KEY, entries);
+            guestForm.reset(); cc.textContent = '0'; renderGuestbook(); toast('Posted!');
+        });
+        $('#clearGuestbook').addEventListener('click', () => { if (confirm('Clear all entries on this device?')) { localStorage.removeItem(BOOK_KEY); renderGuestbook(); } });
+
+        // ===== Quiz =====
+        const quizData = [
+            { q: 'Which track features the lyric “Is it too late now to say sorry?”', a: ['Baby', 'Sorry', 'Yummy', 'Ghost'], c: 1 },
+            { q: 'Album that includes “Love Yourself”?', a: ['Believe', 'Purpose', 'Justice', 'Changes'], c: 1 },
+            { q: 'Song with Daniel Caesar & Giveon:', a: ['Peaches', 'Company', 'Intentions', 'Ghost'], c: 0 },
+            { q: '“What Do You Mean?” released in:', a: ['2011', '2013', '2015', '2017'], c: 2 },
+            { q: 'Collab with Quavo:', a: ['Intentions', 'Yummy', 'Love Yourself', 'Baby'], c: 0 }
+        ];
+        function startQuiz() {
+            const root = $('#quiz'); root.innerHTML = ''; $('#quizResult').textContent = '';
+            let score = 0, i = 0;
+            const render = () => {
+                const item = quizData[i];
+                root.innerHTML = `<div class="card" style="background:transparent; border:none; padding:0">
+          <h3>Q${i + 1}. ${item.q}</h3>
+          <div class="grid cols-3" id="answers"></div>
+        </div>`;
+                item.a.forEach((txt, idx) => {
+                    const b = document.createElement('button'); b.className = 'btn'; b.textContent = txt;
+                    b.addEventListener('click', () => {
+                        if (idx === item.c) { score++; toast('Correct!'); } else { toast('Not quite'); }
+                        i++; if (i < quizData.length) render(); else { $('#quizResult').textContent = `You scored ${score}/${quizData.length}.`; }
+                    });
+                    $('#answers').appendChild(b);
+                });
+            };
+            render();
+        }
+        $('#startQuiz').addEventListener('click', startQuiz);
+
+        // ===== Newsletter =====
+        const MAIL_KEY = 'jb_emails';
+        function updateEmailCount() { $('#emailCount').textContent = load(MAIL_KEY, []).length; }
+        $('#mailForm').addEventListener('submit', (e) => {
+            e.preventDefault(); const email = $('#mailEmail').value.trim(); const freq = $('#mailFreq').value;
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return toast('Please enter a valid email');
+            const arr = load(MAIL_KEY, []); if (arr.some(it => it.email === email)) return toast('Already subscribed here');
+            arr.push({ email, freq, ts: Date.now() }); save(MAIL_KEY, arr); e.target.reset(); updateEmailCount(); toast('Subscribed (locally)');
+        });
+        $('#exportEmails').addEventListener('click', () => {
+            const data = JSON.stringify(load(MAIL_KEY, []), null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'jb-fan-mails.json'; a.click(); URL.revokeObjectURL(url);
+        });
+        $('#clearEmails').addEventListener('click', () => { if (confirm('Clear saved emails on this device?')) { localStorage.removeItem(MAIL_KEY); updateEmailCount(); } });
+
+        // ===== Init =====
+        function init() {
+            initTheme();
+            renderSongs();
+            renderTour();
+            renderGallery();
+            renderGuestbook();
+            updatePollUI();
+            updateEmailCount();
+            onScroll();
+        }
+        init();
+    </script>
+</body>
+
+</html>
