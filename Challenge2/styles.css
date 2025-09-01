@@ -1,0 +1,103 @@
+/* styles.css - Challenge #2 (Skeleton: Rides Gallery) */
+
+
+/* 0) Base page */
+* {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: seashell;
+}
+
+
+/* 1) Container */
+.container {
+    max-width: 800px;
+    margin: 0px auto;
+    padding: 24px;
+    
+}
+
+/* 2) Section heading */
+section>h2 {
+    text-align: center;
+    font-size: 1.6rem;
+
+}
+
+
+/* 3) Cards wrapper (center all cards horizontally) */
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    /* default is stretch so the box stretches to fit the containers but if we set to flex-start it goes towards the top */
+    align-items: flex-start;
+
+
+}
+
+/* 4) Card (size, spacing, border, rounded corners) */
+.card {
+
+    display: flex;
+    flex-direction: column;
+
+    width: 240px;
+    height: auto;
+    border: 3px solid lightslategrey;
+    border-radius: 30px;
+
+    margin: 20px 0px;
+    background-color: whitesmoke;
+
+    /* This hides all the content that overflows the border of the box */
+    overflow: hidden;
+
+}
+
+/* 5) Card text (h3 title, paragraph blurb) */
+.card > h3 {
+    font-weight: 900;
+    background-color: transparent;
+    margin: 10px 10px;
+}
+.blurb {
+    color: lightslategrey;
+    background-color: transparent;
+    margin:0 10px 30px 10px;
+    line-height: 1.4em;
+}
+
+
+
+
+/* 6) Card image (fit within card, centered) */
+img {
+
+    width: auto;
+    height: 180px;
+
+
+}
+
+@keyframes wiggle {
+    0% {transform: rotate(3deg);}
+    20% {transform: rotate(-3deg);}
+    40% {transform: rotate(-3deg);}
+    60% {transform: rotate(3deg);}
+    80% {transform: rotate(3deg);}
+    100%{transform: rotate(-3deg);}
+}
+/* 7) Hover state: change border to green, then make it wigglew */
+.card:hover {
+    border-color: red;
+    animation: wiggle 0.3s;
+
+}
+
+/* 8) Footer */
+.site-footer {
+    border-top:0.5px solid lightslategray;
+    text-align: center;
+    color:lightslategray
+}
